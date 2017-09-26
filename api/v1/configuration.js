@@ -1,22 +1,43 @@
-'use strict'
-var _ = require('lodash');
+
+var mongodb = require('mongodb').MongoClient;
 
 
 module.exports = {
     GET: {
-        // GET: /api/v1/configuration/getutentebyid
-        getutentebyid: function(ctx, next){
+        // GET: /api/v1/configuration/getConfiguration
+        getConfiguration: function(ctx, next){
+            return new Promise(function(resolve, reject){
+                var response = {
+                    apiEndPoint: "https://example.com"
+                };
+                resolve(response);
+              })
+              .then(function(result) {
+                ctx.body = result;
+              });  
+        },
+        // GET: /api/v1/configuration/updateTransfer
+        updateTransfer: function(ctx, next){
+            return new Promise(function(resolve, reject){
+                _doUpdate(function(result){
+                    resolve(result);
+                });
+                
+              })
+              .then(function(result) {
+                ctx.body = result;
+              });  
             
-            var data = {time:new Date().getTime(), api: ctx.path, lodashVersion: _.VERSION};
-            ctx.body = data;
-        
-        }
-    },
-    POST:{
-        // POST: /api/v1/configuration/getutentebyname
-        getutentebyname: function(ctx, next){
-            var data = {time:new Date().getTime(), api: ctx.path, lodashVersion: _.VERSION};
-            ctx.body = data;
         }
     } 
 };
+
+function _doUpdate(callback){
+    setTimeout(function(){
+        callback({item:50});
+    }, 500)
+
+
+};
+
+

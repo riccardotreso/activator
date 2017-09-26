@@ -4,6 +4,9 @@
         {
             "type": "node",
             "request": "launch",
+            "args": [
+                "--harmony-async-await"
+            ],
             "name": "Launch Program",
             "program": "${workspaceRoot}/app.js"
         }

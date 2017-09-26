@@ -1,4 +1,4 @@
-'use strict'
+
 const auth = require('koa-basic-auth');
 const Koa = require('koa');
 const Router = require('koa-router');
@@ -44,7 +44,6 @@ app.use(auth({ name: basicAuth.name, pass: basicAuth.password }));
 
 // routing
 app.use(router.routes()).use(router.allowedMethods());
-
 
 app.listen(lPort, function () {
     console.log('Listening on port %d', lPort);
