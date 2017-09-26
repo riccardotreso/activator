@@ -9,10 +9,17 @@ const mLoader = new Loader();
 const app = new Koa();
 const router = new Router();
 
+const basicAuth = {
+    name:"test", 
+    password:"test"
+};
+const lPort = 3000;
+
 // load api
 
 mLoader.modules_result.forEach(function(api, idx, array){
     router[api.verb.toLowerCase()](api.route, api.callback);
+    console.log("Exposing HTTP %s %s",api.verb, api.route);
 });
 
 
@@ -33,17 +40,13 @@ app.use(async (ctx, next) => {
   
 
 // require auth
-app.use(auth({ name: 'test', pass: 'test' }));
+app.use(auth({ name: basicAuth.name, pass: basicAuth.password }));
 
-
+// routing
 app.use(router.routes()).use(router.allowedMethods());
-/*app.use(async ctx => {
-    var data = {time:new Date().getTime()}
 
-    ctx.body = data;
-});
-*/
 
-app.listen(3000, function () {
-    console.log('listening on port 3000');
+app.listen(lPort, function () {
+    console.log('Listening on port %d', lPort);
+    console.log("Basic Auth: UserName: %s, Password: %s", basicAuth.name, basicAuth.password);
   });
